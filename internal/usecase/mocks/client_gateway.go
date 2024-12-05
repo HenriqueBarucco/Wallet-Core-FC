@@ -9,10 +9,6 @@ type ClientGatewayMock struct {
 	mock.Mock
 }
 
-func NewClientGatewayMock() *ClientGatewayMock {
-	return &ClientGatewayMock{}
-}
-
 func (m *ClientGatewayMock) Save(client *entity.Client) error {
 	args := m.Called(client)
 	return args.Error(0)
