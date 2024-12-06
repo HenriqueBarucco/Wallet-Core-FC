@@ -15,7 +15,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
     consumer:
       group-id: my-group
       auto-offset-reset: earliest
