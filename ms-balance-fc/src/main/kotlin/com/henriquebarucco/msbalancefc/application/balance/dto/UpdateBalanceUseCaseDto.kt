@@ -1,12 +1,8 @@
 package com.henriquebarucco.msbalancefc.application.balance.dto
 
-class BalanceOfIdUseCaseDto {
+class UpdateBalanceUseCaseDto {
     data class Input(
         val id: String,
-    )
-
-    data class Output(
-        val id: String,
-        val amount: Double,
+        val balance: Double,
     )
 }

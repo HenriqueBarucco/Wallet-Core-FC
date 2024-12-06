@@ -1,5 +1,5 @@
 package com.henriquebarucco.msbalancefc.application.usecase
 
-interface InputUseCase<INPUT, OUTPUT> {
+interface UseCase<INPUT, OUTPUT> {
     fun execute(input: INPUT): OUTPUT
 }
