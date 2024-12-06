@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "balances")
@@ -18,11 +19,17 @@ data class BalanceEntity(
     val accountId: String,
     @Column(name = "amount", nullable = false, unique = false)
     val amount: Double,
+    @Column(name = "updated_at", nullable = true, unique = false)
+    val updatedAt: LocalDateTime?,
+    @Column(name = "created_at", nullable = false, unique = false)
+    val createdAt: LocalDateTime,
 ) {
     fun toDomain() =
         Balance(
             id = this.accountId,
             amount = this.amount,
+            updatedAt = this.updatedAt,
+            createdAt = this.createdAt,
         )
 }
 
@@ -31,4 +38,6 @@ fun Balance.toEntity(id: Long?) =
         id = id,
         accountId = this.id,
         amount = this.amount,
+        updatedAt = this.updatedAt,
+        createdAt = this.createdAt,
     )
