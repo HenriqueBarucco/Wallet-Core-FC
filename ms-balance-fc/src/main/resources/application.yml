@@ -1,0 +1,21 @@
+server:
+  port: 3003
+
+spring:
+  application:
+    name: ms-balance-fc
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/wallet}
+    username: ${DATABASE_USER:root}
+    password: ${DATABASE_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
