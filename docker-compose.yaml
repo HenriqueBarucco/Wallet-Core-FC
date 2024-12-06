@@ -1,23 +1,45 @@
 services:
-  goapp: 
+  ms-wallet: 
     build: ms-wallet-fc/.
     platform: linux/amd64
+    container_name: ms-wallet
     volumes:
       - .:/app
     ports:
       - 8080:8080
+  
+  ms-balance: 
+    build: ms-balance-fc/.
+    platform: linux/amd64
+    container_name: ms-balance
+    volumes:
+      - .:/app
+    ports:
+      - 3003:3003
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql:3306/balance
+      KAFKA_URL: kafka:29092
+    depends_on:
+      - ms-wallet
+      - mysql
+      - kafka
 
   mysql:
     image: mysql:8.1
-    platform: linux/amd64
+    container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wallet
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'henrique'
+      MYSQL_PASSWORD: '123456'
+      MYSQL_DATABASE: 'wallet'
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
-      - .docker/mysql:/var/lib/mysql
+      - "./database/seed.sql:/docker-entrypoint-initdb.d/1.sql"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"
